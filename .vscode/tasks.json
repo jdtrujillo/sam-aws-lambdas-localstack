@@ -1,0 +1,93 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "aws-sam-lambdas-build",
+            "type": "shell",
+            "command": "sam build --template config/template.yaml",
+            "options": {
+                "cwd": "${workspaceFolder}/aws-sam-lambdas"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "aws-sam-lambdas-build-invoke",
+            "type": "shell",
+            "command": "sam local invoke SaludoFunction -e events/saludo_1.json",
+            "options": {
+                "cwd": "${workspaceFolder}/aws-sam-lambdas"
+            },
+            "dependsOn": "aws-sam-lambdas-build",
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "aws-localstack-lambdas-create-dynamo-tables",
+            "type": "shell",
+            "command": "chmod +x utils/create_dynamodb_tables.sh && ./utils/create_dynamodb_tables.sh",
+            "options": {
+                "cwd": "${workspaceFolder}/aws-localstack-lambdas"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "aws-localstack-lambdas-build",
+            "type": "shell",
+            "command": "sam build --template config/template.yaml",
+            "options": {
+                "cwd": "${workspaceFolder}/aws-localstack-lambdas"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "aws-localstack-lambdas-guardar-libro-invoke",
+            "type": "shell",
+            "command": "sam local invoke GuardarLibroFunction -e events/evento_guardar.json",
+            "options": {
+                "cwd": "${workspaceFolder}/aws-localstack-lambdas"
+            },
+            "dependsOn": "aws-localstack-lambdas-build",
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "aws-localstack-lambdas-consultar-libros-invoke",
+            "type": "shell",
+            "command": "sam local invoke ConsultarLibrosFunction",
+            "options": {
+                "cwd": "${workspaceFolder}/aws-localstack-lambdas"
+            },
+            "dependsOn": "aws-localstack-lambdas-build",
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Runtime: python3.12
+    Architectures:
+      - arm64
+    Environment:
+      Variables:
+        # Permite al contenedor de SAM en macOS hablar con el contenedor de LocalStack
+        DYNAMODB_ENDPOINT: http://host.docker.internal:4566
+
+Resources:
+  GuardarLibroFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/
+      Handler: put_book.lambda_handler
+
+  ConsultarLibrosFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../src/
+      Handler: get_books.lambda_handler
