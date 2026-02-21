@@ -72,3 +72,4 @@ Thumbs.db
 .project
 .pydevproject
 .settings/
+aws-localstack-lambdas/src/poc.code-workspace
